@@ -38,7 +38,6 @@ namespace DefaultNamespace
             float angle = Vector2.SignedAngle(Vector2.down, direction);
             _wheelUITransform.eulerAngles = new Vector3(0, 0, angle);
             _input.UpdateInputs(direction.normalized);
-            Debug.Log(direction);
         }
 
         public void OnPointerUp(PointerEventData eventData)

@@ -23,7 +23,7 @@ namespace DefaultNamespace
 
         public void UpdateInputs(Vector2 direction)
         {
-            RotateInput = -direction.x;
+            RotateInput = direction.x;
         }
     }
 }
