@@ -13,17 +13,21 @@ public class RoomMediator : MonoBehaviour
     [SerializeField] private GameObject _customizationPanel;
     private readonly PanelsSwitch _panelsSwitch=new ();
     private GameStateMachine _gameStateMachine;
+    private RoomMediator _roomMediator;
+    private CarCustomizationView _carCustomizationView;
 
     [Inject]
-    private void Construct(GameStateMachine gameStateMachine)
+    private void Construct(GameStateMachine gameStateMachine, CarCustomizationView carCustomizationView)
     {
         _gameStateMachine = gameStateMachine;
+        _carCustomizationView = carCustomizationView;
     }
     private void Start()
     {
         _panelsSwitch.Init(_mainMenu);
     }
 
+    public void ResetCarCustomization() => _carCustomizationView.Reset();
     public void OpenSingleLevel() => _gameStateMachine.Enter<LoadLevelState>();
 
     public void OpenPreviousPanel() => _panelsSwitch.Back();

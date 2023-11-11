@@ -21,7 +21,6 @@ public class UiMainMenu : MonoBehaviour
     {
         _startSingleButton.onClick.AddListener(_mediator.OpenSingleLevel);
         _startOnlineButton.onClick.AddListener(_mediator.OpenSingleLevel);
-        Debug.Log("aa");
         _openRoomButton.onClick.AddListener(_mediator.OpenRoomPanel);
         _openShopButton.onClick.AddListener(_mediator.OpenRoomPanel);
         

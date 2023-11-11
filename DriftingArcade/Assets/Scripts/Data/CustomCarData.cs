@@ -6,5 +6,5 @@ using UnityEngine;
 public class CustomCarData 
 {
     public Color CarColor;
-    public AccessoriesType Type;
+    public AccessoriesType AccessoriesType;
 }

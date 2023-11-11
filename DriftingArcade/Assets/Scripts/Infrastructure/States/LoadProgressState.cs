@@ -1,6 +1,8 @@
 ﻿using CodeBase.Infrastructure.Services.PersistentProgress;
 using CodeBase.Infrastructure.Services.SaveLoad;
 using Data;
+using DefaultNamespace.Data;
+using UnityEngine;
 
 namespace CodeBase.Infrastructure.States
 {
@@ -9,7 +11,7 @@ namespace CodeBase.Infrastructure.States
     private readonly GameStateMachine _gameStateMachine;
     private readonly IPersistentProgressService _progressService;
     private readonly ISaveLoadService _saveLoadService;
-
+    private readonly Color _startCarColor = new Color(64/255f, 104/255f, 183/255f);
     public LoadProgressState(GameStateMachine gameStateMachine, IPersistentProgressService progressService,
       ISaveLoadService saveLoadService)
     {
@@ -29,10 +31,16 @@ namespace CodeBase.Infrastructure.States
     }
 
     private void LoadProgressOrInitNew() =>
-      _progressService.Data =
+      _progressService.PlayerData =
         _saveLoadService.LoadProgress()
         ?? NewProgress();
 
-    private PlayerData NewProgress() => new();
+    private PlayerData NewProgress()
+    {
+      PlayerData newProgress = new PlayerData();
+      newProgress.CustomCarData.CarColor = _startCarColor;
+      newProgress.CustomCarData.AccessoriesType = AccessoriesType.None;
+      return newProgress;
+    }
   }
 }

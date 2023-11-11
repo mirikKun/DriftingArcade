@@ -1,5 +1,6 @@
 using CodeBase.Infrastructure;
 using CodeBase.Infrastructure.States;
+using Infrastructure;
 using UnityEngine;
 using Zenject;
 
@@ -23,7 +24,7 @@ namespace DefaultNamespace
             if(bootstrapper != null) return;
 
             GameBootstrapper gameBootstrapper = Instantiate(_bootstrapperPrefab);
-            gameBootstrapper.Construct(_stateMachine);
+            gameBootstrapper.Setup(_stateMachine);
         }
     }
 }
