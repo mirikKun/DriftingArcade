@@ -5,10 +5,11 @@ using UnityEngine;
 
 namespace CodeBase.Infrastructure.States
 {
-  public class LoadLevelState : IPayloadedState<string>
+  public class LoadLevelState : IState
   {
     private const string InitialPointTag = "InitialPoint";
 
+    private const string MainLevel = "Main";
     private readonly GameStateMachine _stateMachine;
     private readonly SceneLoader _sceneLoader;
     private readonly LoadingCurtain _curtain;
@@ -24,10 +25,10 @@ namespace CodeBase.Infrastructure.States
       _progressService = progressService;
     }
 
-    public void Enter(string sceneName)
+    public void Enter()
     {
       _curtain.Show();
-      _sceneLoader.Load(sceneName, OnLoaded);
+      _sceneLoader.Load(MainLevel,OnLoaded);
     }
 
     public void Exit()
@@ -44,10 +45,8 @@ namespace CodeBase.Infrastructure.States
 
     private void InitGameWorld()
     {
-      GameObject hero = _gameFactory.CreateHero(at: GameObject.FindWithTag(InitialPointTag));
-
-      _gameFactory.CreateHud();
-
+      GameObject hero = _gameFactory.CreatePlayer(at: GameObject.FindWithTag(InitialPointTag));
+      
      // CameraFollow(hero);
     }
 

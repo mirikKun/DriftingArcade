@@ -1,6 +1,6 @@
 ﻿using CodeBase.Infrastructure.Services.PersistentProgress;
 using CodeBase.Infrastructure.Services.SaveLoad;
-using DefaultNamespace.Data;
+using Data;
 
 namespace CodeBase.Infrastructure.States
 {
@@ -21,7 +21,7 @@ namespace CodeBase.Infrastructure.States
     public void Enter()
     {
       LoadProgressOrInitNew();
-      _gameStateMachine.Enter<LoadLevelState, string>(_progressService.Progress.WorldData.PositionOnLevel.Level);
+      _gameStateMachine.Enter<LoadMainMenuState>();
     }
 
     public void Exit()
@@ -29,16 +29,10 @@ namespace CodeBase.Infrastructure.States
     }
 
     private void LoadProgressOrInitNew() =>
-      _progressService.Progress =
+      _progressService.Data =
         _saveLoadService.LoadProgress()
         ?? NewProgress();
 
-    private PlayerProgress NewProgress() => new();
-  }
-
-  public class PlayerProgress
-  {
-    public CustomCarData CustomCarData;
-    public PointsData PointsData;
+    private PlayerData NewProgress() => new();
   }
 }

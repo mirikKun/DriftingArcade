@@ -3,16 +3,9 @@ using UnityEngine;
 
 namespace CodeBase.Infrastructure.Fabric
 {
-    public class IGameFactory:IService
+    public interface IGameFactory:IService
     {
-        public GameObject CreateHero(GameObject at)
-        {
-            throw new System.NotImplementedException();
-        }
+        public GameObject CreatePlayer(GameObject at);
 
-        public void CreateHud()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

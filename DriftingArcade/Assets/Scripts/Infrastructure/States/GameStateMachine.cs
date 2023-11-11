@@ -5,6 +5,7 @@ using CodeBase.Infrastructure.Logic;
 using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.PersistentProgress;
 using CodeBase.Infrastructure.Services.SaveLoad;
+using Zenject;
 
 namespace CodeBase.Infrastructure.States
 {
@@ -13,16 +14,17 @@ namespace CodeBase.Infrastructure.States
     private readonly Dictionary<Type, IExitableState> _states;
     private IExitableState _activeState;
 
-    public GameStateMachine(SceneLoader sceneLoader, LoadingCurtain curtain)
+    [Inject]
+    public GameStateMachine(SceneLoader sceneLoader, LoadingCurtain curtain,IGameFactory gameFactory,IPersistentProgressService progressService,ISaveLoadService saveLoadService)
     {
       _states = new Dictionary<Type, IExitableState>()
       {
         [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader),
-        [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, curtain, services.Single<IGameFactory>(), services.Single<IPersistentProgressService>()),
-        [typeof(LoadProgressState)] = new LoadProgressState(this,
-          services.Single<IPersistentProgressService>(),
-          services.Single<ISaveLoadService>()),
+        [typeof(LoadProgressState)] = new LoadProgressState(this, progressService, saveLoadService),
+        [typeof(LoadMainMenuState)] = new LoadMainMenuState(this,sceneLoader,curtain),
+        [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, curtain, gameFactory, progressService),
         [typeof(GameLoopState)] = new GameLoopState(this),
+        [typeof(RoomLoopState)] = new RoomLoopState(this),
       };
     }
 

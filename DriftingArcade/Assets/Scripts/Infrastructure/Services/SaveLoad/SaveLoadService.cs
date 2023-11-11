@@ -2,6 +2,7 @@
 using CodeBase.Infrastructure.Fabric;
 using CodeBase.Infrastructure.Services.PersistentProgress;
 using CodeBase.Infrastructure.States;
+using Data;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.Services.SaveLoad
@@ -27,10 +28,10 @@ namespace CodeBase.Infrastructure.Services.SaveLoad
       // PlayerPrefs.SetString(ProgressKey, _progressService.Progress.ToJson());
     }
 
-    public PlayerProgress LoadProgress()
+    public PlayerData LoadProgress()
     {
       return PlayerPrefs.GetString(ProgressKey)?
-        .ToDeserialized<PlayerProgress>();
+        .ToDeserialized<PlayerData>();
     }
   }
 }

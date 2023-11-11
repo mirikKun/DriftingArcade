@@ -2,12 +2,14 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Zenject;
 
 namespace CodeBase.Infrastructure
 {
   public class SceneLoader
   {
     private readonly ICoroutineRunner _coroutineRunner;
+    [Inject]
     public SceneLoader(ICoroutineRunner coroutineRunner) =>
       _coroutineRunner = coroutineRunner;
 

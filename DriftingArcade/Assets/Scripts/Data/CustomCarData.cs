@@ -1,8 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using DefaultNamespace.Data;
 using UnityEngine;
 
+[Serializable]
 public class CustomCarData 
 {
     public Color CarColor;
