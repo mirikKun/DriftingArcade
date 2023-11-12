@@ -1,9 +1,9 @@
-using CodeBase.Infrastructure.AssetManagement;
-using CodeBase.Infrastructure.Services.PersistentProgress;
+using Infrastructure.AssetManagement;
+using Infrastructure.Services.PersistentProgress;
 using UnityEngine;
 using Zenject;
 
-namespace CodeBase.Infrastructure.Fabric
+namespace Infrastructure.Fabric
 {
     public class GameFactory:IGameFactory
     {
@@ -11,16 +11,18 @@ namespace CodeBase.Infrastructure.Fabric
         private readonly IPersistentProgressService _persistentProgressService;
         private GameObject _playerGameObject;
         private readonly string _playerPath= "PlayerCar";
-
+        private DiContainer _diContainer;
         [Inject]
-        public GameFactory(IAssetProvider assets, IPersistentProgressService persistentProgressService)
+        public GameFactory(DiContainer diContainer,IAssetProvider assets, IPersistentProgressService persistentProgressService)
         {
             _assets = assets;
             _persistentProgressService = persistentProgressService;
+            _diContainer = diContainer;
         }
-        public GameObject CreatePlayer(GameObject at)
+        public GameObject CreatePlayer(Transform at)
         {
-            _playerGameObject=_assets.Instantiate(path: _playerPath, at: at.transform.position);
+            GameObject playerAsset=_assets.GetAsset(path: _playerPath);
+            _playerGameObject=_diContainer.InstantiatePrefab(playerAsset, at.position, Quaternion.identity, at);
             return _playerGameObject;
         }
 

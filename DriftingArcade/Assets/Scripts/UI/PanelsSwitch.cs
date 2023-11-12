@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PanelsSwitch 
 {
-    private Stack<GameObject> _openedPanels=new Stack<GameObject>();
+    private Stack<GameObject> _openedPanels;
     private GameObject _activePanel;
 
-    public void Init(GameObject startPanel)
+    public PanelsSwitch(GameObject startPanel)
     {
         _openedPanels=new Stack<GameObject>();
         _openedPanels.Push(startPanel);

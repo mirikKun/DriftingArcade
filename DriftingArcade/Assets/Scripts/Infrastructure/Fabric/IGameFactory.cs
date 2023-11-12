@@ -1,11 +1,11 @@
-using CodeBase.Infrastructure.Services;
+using Infrastructure.Services;
 using UnityEngine;
 
-namespace CodeBase.Infrastructure.Fabric
+namespace Infrastructure.Fabric
 {
     public interface IGameFactory:IService
     {
-        public GameObject CreatePlayer(GameObject at);
+        public GameObject CreatePlayer(Transform at);
 
     }
 }

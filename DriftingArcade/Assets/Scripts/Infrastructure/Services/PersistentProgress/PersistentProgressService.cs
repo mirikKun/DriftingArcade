@@ -1,7 +1,6 @@
-﻿using CodeBase.Infrastructure.States;
-using Data;
+﻿using Data;
 
-namespace CodeBase.Infrastructure.Services.PersistentProgress
+namespace Infrastructure.Services.PersistentProgress
 {
   public class PersistentProgressService : IPersistentProgressService
   {

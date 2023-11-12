@@ -1,8 +1,8 @@
-using DefaultNamespace.Data;
+using Data;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DefaultNamespace.UI
+namespace UI
 {
     public class AccessoriesChooseButton:MonoBehaviour
     {

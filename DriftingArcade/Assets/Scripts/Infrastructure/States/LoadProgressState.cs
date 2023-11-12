@@ -1,10 +1,9 @@
-﻿using CodeBase.Infrastructure.Services.PersistentProgress;
-using CodeBase.Infrastructure.Services.SaveLoad;
-using Data;
-using DefaultNamespace.Data;
+﻿using Data;
+using Infrastructure.Services.PersistentProgress;
+using Infrastructure.Services.SaveLoad;
 using UnityEngine;
 
-namespace CodeBase.Infrastructure.States
+namespace Infrastructure.States
 {
   public class LoadProgressState : IState
   {
@@ -23,7 +22,7 @@ namespace CodeBase.Infrastructure.States
     public void Enter()
     {
       LoadProgressOrInitNew();
-      _gameStateMachine.Enter<LoadMainMenuState>();
+      _gameStateMachine.Enter<LoadRoomSceneState>();
     }
 
     public void Exit()

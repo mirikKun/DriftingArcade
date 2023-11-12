@@ -1,7 +1,6 @@
-﻿using CodeBase.Infrastructure.States;
-using Data;
+﻿using Data;
 
-namespace CodeBase.Infrastructure.Services.SaveLoad
+namespace Infrastructure.Services.SaveLoad
 {
   public interface ISaveLoadService : IService
   {

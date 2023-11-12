@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using CodeBase.Infrastructure.Fabric;
-using CodeBase.Infrastructure.Logic;
-using CodeBase.Infrastructure.Services;
-using CodeBase.Infrastructure.Services.PersistentProgress;
-using CodeBase.Infrastructure.Services.SaveLoad;
+using Infrastructure.Fabric;
+using Infrastructure.Logic;
+using Infrastructure.Services.PersistentProgress;
+using Infrastructure.Services.SaveLoad;
 using Zenject;
 
-namespace CodeBase.Infrastructure.States
+namespace Infrastructure.States
 {
   public class GameStateMachine
   {
@@ -21,8 +20,8 @@ namespace CodeBase.Infrastructure.States
       {
         [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader),
         [typeof(LoadProgressState)] = new LoadProgressState(this, progressService, saveLoadService),
-        [typeof(LoadMainMenuState)] = new LoadMainMenuState(this,sceneLoader,curtain),
-        [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, curtain, gameFactory, progressService),
+        [typeof(LoadRoomSceneState)] = new LoadRoomSceneState(this,sceneLoader,curtain),
+        [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, curtain),
         [typeof(GameLoopState)] = new GameLoopState(this),
         [typeof(RoomLoopState)] = new RoomLoopState(this),
       };

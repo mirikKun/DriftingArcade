@@ -1,27 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-public class UiCustomizationPanel : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private Button _backButton;
-    private RoomMediator _mediator;
-    [Inject]
-    private void Construct(RoomMediator mediator)
+    public class UiCustomizationPanel : MonoBehaviour
     {
-        _mediator = mediator;
-    }
-    private void Start()
-    {
-        _backButton.onClick.AddListener((() =>
+        [SerializeField] private Button _backButton;
+        private RoomMediator _mediator;
+        [Inject]
+        private void Construct(RoomMediator mediator)
         {
-            _mediator.OpenPreviousPanel();
-            _mediator.ResetCarCustomization();
-        }));
+            _mediator = mediator;
+        }
+        private void Start()
+        {
+            _backButton.onClick.AddListener((() =>
+            {
+                _mediator.OpenPreviousPanel();
+                _mediator.ResetCarCustomization();
+            }));
 
         
      
+        }
     }
 }

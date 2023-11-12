@@ -1,5 +1,4 @@
 using System;
-using DefaultNamespace.Data;
 
 namespace Data
 {

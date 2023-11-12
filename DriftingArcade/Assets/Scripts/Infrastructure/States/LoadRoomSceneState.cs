@@ -1,8 +1,8 @@
-using CodeBase.Infrastructure.Logic;
+using Infrastructure.Logic;
 
-namespace CodeBase.Infrastructure.States
+namespace Infrastructure.States
 {
-    public class LoadMainMenuState:IState
+    public class LoadRoomSceneState:IState
     {
         private const string MainMenu = "Room";
 
@@ -10,7 +10,7 @@ namespace CodeBase.Infrastructure.States
         private readonly SceneLoader _sceneLoader;
         private readonly LoadingCurtain _curtain;
 
-        public LoadMainMenuState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, LoadingCurtain curtain)
+        public LoadRoomSceneState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, LoadingCurtain curtain)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;

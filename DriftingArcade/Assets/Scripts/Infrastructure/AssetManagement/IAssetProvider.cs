@@ -1,11 +1,11 @@
-﻿using CodeBase.Infrastructure.Services;
+﻿using Infrastructure.Services;
 using UnityEngine;
 
-namespace CodeBase.Infrastructure.AssetManagement
+namespace Infrastructure.AssetManagement
 {
   public interface IAssetProvider : IService
   {
     GameObject Instantiate(string path);
-    GameObject Instantiate(string path, Vector3 at);
+    GameObject GetAsset(string path);
   }
 }

@@ -6,8 +6,8 @@ namespace DefaultNamespace
     {
         public float RotateInput { get; set; }
         public float GasInput { get; set; }
-        void TurnOnGas();
-        void TurnOffGas();
-        void UpdateInputs(Vector2 direction);
+  
+        void UpdateRotation(float rotation);
+        void UpdateSpeed( float speed);
     }
 }

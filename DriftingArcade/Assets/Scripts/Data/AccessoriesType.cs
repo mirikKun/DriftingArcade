@@ -1,4 +1,4 @@
-namespace DefaultNamespace.Data
+namespace Data
 {
     
     public enum AccessoriesType

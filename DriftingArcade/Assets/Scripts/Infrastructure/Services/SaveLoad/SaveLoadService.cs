@@ -1,7 +1,5 @@
-﻿using CodeBase.Data;
-using CodeBase.Infrastructure.Services.PersistentProgress;
-using CodeBase.Infrastructure.Services.SaveLoad;
-using Data;
+﻿using Data;
+using Infrastructure.Services.PersistentProgress;
 using UnityEngine;
 using Zenject;
 
