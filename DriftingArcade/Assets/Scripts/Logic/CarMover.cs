@@ -47,15 +47,16 @@ public class CarMover : MonoBehaviour
         if (_photonView&&_photonView.IsMine)
         {
             CarMoving();
-            _photonView.RPC("SetForceAngle", RpcTarget.Others, _forceAngle);
+            _photonView.RPC("SetForceAngleAndDirection", RpcTarget.Others, _forceAngle,_moveForce);
         }
         OnDriftingInvoking(_forceAngle);
     }
 
     [PunRPC]
-    private void SetForceAngle(float angle)
+    private void SetForceAngleAndDirection(float angle,Vector3 moveForce)
     {
         _forceAngle = angle;
+        _moveForce = moveForce;
     }
 
 
