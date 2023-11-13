@@ -19,17 +19,25 @@ namespace Infrastructure.Installers
             BindCoroutineRunner();
             BindSceneLoader();
             BindCurtain();
-        
+
             BindInputService();
             BindAssetProvider();
             BindProgressService();
             BindSaveLoadService();
-        
+
+            BindPhotonSceneLoader();
             BindFactory();
             BindStateMachine();
+            BindPhotonLoader();
+
         }
 
-  
+        private void BindPhotonSceneLoader()
+        {
+            Container
+                .Bind<PhotonSceneLoader>()
+                .AsSingle();        }
+
 
         private void BindFactory()
         {
@@ -88,6 +96,12 @@ namespace Infrastructure.Installers
         {
             Container
                 .Bind<SceneLoader>()
+                .AsSingle();
+        }
+        private void BindPhotonLoader()
+        {
+            Container
+                .Bind<PhotonDisconnector>()
                 .AsSingle();
         }
 

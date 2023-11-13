@@ -7,5 +7,6 @@ namespace Infrastructure.Fabric
     {
         public GameObject CreatePlayer(Transform at);
 
+        GameObject CreateOnlinePlayer(Transform at);
     }
 }

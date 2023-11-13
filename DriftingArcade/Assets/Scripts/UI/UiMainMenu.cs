@@ -22,9 +22,9 @@ namespace UI
         private void Start()
         {
             _startSingleButton.onClick.AddListener(_mediator.OpenSingleLevel);
-            _startOnlineButton.onClick.AddListener(_mediator.OpenSingleLevel);
+            _startOnlineButton.onClick.AddListener(_mediator.ConnectToServer);
             _openRoomButton.onClick.AddListener(_mediator.OpenRoomPanel);
-            _openShopButton.onClick.AddListener(_mediator.OpenRoomPanel);
+            _openShopButton.onClick.AddListener(_mediator.OpenShopPanel);
         
             _exitButton.onClick.AddListener(Exit);
         }

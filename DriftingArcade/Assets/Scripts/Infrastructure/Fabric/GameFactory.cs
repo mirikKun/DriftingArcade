@@ -1,5 +1,5 @@
 using Infrastructure.AssetManagement;
-using Infrastructure.Services.PersistentProgress;
+using Photon.Pun;
 using UnityEngine;
 using Zenject;
 
@@ -8,15 +8,14 @@ namespace Infrastructure.Fabric
     public class GameFactory:IGameFactory
     {
         private readonly IAssetProvider _assets;
-        private readonly IPersistentProgressService _persistentProgressService;
         private GameObject _playerGameObject;
         private readonly string _playerPath= "PlayerCar";
+        private readonly string _playerOnlinePath= "PlayerCarOnline";
         private DiContainer _diContainer;
         [Inject]
-        public GameFactory(DiContainer diContainer,IAssetProvider assets, IPersistentProgressService persistentProgressService)
+        public GameFactory(DiContainer diContainer,IAssetProvider assets)
         {
             _assets = assets;
-            _persistentProgressService = persistentProgressService;
             _diContainer = diContainer;
         }
         public GameObject CreatePlayer(Transform at)
@@ -25,6 +24,10 @@ namespace Infrastructure.Fabric
             _playerGameObject=_diContainer.InstantiatePrefab(playerAsset, at.position, Quaternion.identity, at);
             return _playerGameObject;
         }
-
+        public GameObject CreateOnlinePlayer(Transform at)
+        {
+           _playerGameObject=PhotonNetwork.Instantiate(_playerOnlinePath, at.position, Quaternion.identity);
+            return _playerGameObject;
+        }
     }
 }

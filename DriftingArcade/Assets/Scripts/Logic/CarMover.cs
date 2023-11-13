@@ -1,5 +1,6 @@
 using System;
 using DefaultNamespace;
+using Photon.Pun;
 using UnityEngine;
 using Zenject;
 
@@ -14,7 +15,7 @@ public class CarMover : MonoBehaviour
     [SerializeField] private float _traction = 0.01f;
     [SerializeField] private float _angleToMinDrag = 60;
 
-    [SerializeField] private float _angleToDriftProve=35f;
+    [SerializeField] private float _angleToDriftProve=40f;
     [SerializeField] private float _minSpeedToDrift=5;
     public event Action OnDrifting;
     private float _currentDrag;
@@ -24,6 +25,8 @@ public class CarMover : MonoBehaviour
     private Transform _transform;
     private Vector3 _startPosition;
     private float _forceAngle;
+    private PhotonView _photonView;
+    
 
     [Inject]
     private void Construct(IInput input)
@@ -36,14 +39,25 @@ public class CarMover : MonoBehaviour
         _transform = transform;
         _currentDrag = _drag;
         _startPosition = _transform.position;
-
+        _photonView = GetComponent<PhotonView>();
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        CarMoving();
+        if (_photonView&&_photonView.IsMine)
+        {
+            CarMoving();
+            _photonView.RPC("SetForceAngle", RpcTarget.Others, _forceAngle);
+        }
         OnDriftingInvoking(_forceAngle);
     }
+
+    [PunRPC]
+    private void SetForceAngle(float angle)
+    {
+        _forceAngle = angle;
+    }
+
 
     private void CarMoving()
     {
@@ -60,6 +74,14 @@ public class CarMover : MonoBehaviour
         _moveForce *= _currentDrag;
         _moveForce = Vector3.ClampMagnitude(_moveForce, _maxSpeed);
         _moveForce = LerpForceToMoveDirection();
+    }
+
+    public void Reset()
+    {
+        _moveForce=Vector3.zero;
+        _transform.rotation=Quaternion.identity;
+        _transform.position = _startPosition;
+        _currentDrag = _drag;
     }
 
     private void CalculateDrag(float forceAngle)
@@ -79,14 +101,6 @@ public class CarMover : MonoBehaviour
             OnDrifting?.Invoke();
             _driftingEffect.EnableEffect();
         }
-    }
-
-    public void Reset()
-    {
-        _moveForce=Vector3.zero;
-        _transform.rotation=Quaternion.identity;
-        _transform.position = _startPosition;
-        _currentDrag = _drag;
     }
 
     private float TractionDelta() => _traction * Time.deltaTime;

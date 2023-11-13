@@ -4,7 +4,7 @@ namespace Infrastructure.States
 {
     public class LoadRoomSceneState:IState
     {
-        private const string MainMenu = "Room";
+        private const string MainMenu = "MainRoom";
 
         private readonly GameStateMachine _gameStateMachine;
         private readonly SceneLoader _sceneLoader;

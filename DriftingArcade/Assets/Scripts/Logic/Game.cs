@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UI;
 using UnityEngine;
 using Zenject;
 
@@ -13,22 +14,33 @@ public class Game : MonoBehaviour
 
    private PointsCounter _pointsCounter;
    
-   private GameLevelMediator _mediator;
+   private IGameMediator _mediator;
    private CarMover _carMover;
    
    private float _currentTime;
    private bool _timeEnded;
 
    [Inject]
-   private void Construct(GameLevelMediator mediator,CarMover carMover)
+   private void Construct(IGameMediator mediator)
    {
       _mediator = mediator;
-      _carMover = carMover;
    }
+
+   public void SetPlayer(CarMover carMover)
+   {
+      _carMover = carMover;
+      _carMover.OnDrifting += AddPoints;
+   }
+
+   private void OnDestroy()
+   {
+      if(_carMover)
+       _carMover.OnDrifting -= AddPoints;
+   }
+
    private void Start()
    {
       ResetGame();
-      _carMover.OnDrifting += AddPoints;
    }
 
    private void Update()
@@ -48,10 +60,12 @@ public class Game : MonoBehaviour
       _pointsCounter.AddDriftingPoints(Time.deltaTime);
       _uiPoints.UpdatePointsText(_pointsCounter.CurrentPoints);
    }
-   private void ResetGame()
+   public void ResetGame()
    {
       _currentTime = 0;
       _pointsCounter = new PointsCounter(_pointsPerSecond);
+      if(_carMover)
+         _carMover.Reset();
    }
    private void EndGame()
    {
