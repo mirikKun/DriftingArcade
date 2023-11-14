@@ -6,26 +6,30 @@ using Zenject;
 
 namespace UI
 {
-    public class UiShop:MonoBehaviour
+    public class UiShop : MonoBehaviour
     {
-        
         [SerializeField] private ColorBuyButton[] _colorBuyButtons;
         [SerializeField] private AccessoryBuyButton[] _accessoriesBuyButtons;
 
         private ISaveLoadService _saveLoadService;
         private IPersistentProgressService _progressService;
+        private RoomMediator _mediator;
+
         [Inject]
-        private void Construct(RoomMediator mediator, ISaveLoadService saveLoadService,IPersistentProgressService progressService)
+        private void Construct(RoomMediator mediator, ISaveLoadService saveLoadService,
+            IPersistentProgressService progressService)
         {
+            _mediator = mediator;
             _saveLoadService = saveLoadService;
             _progressService = progressService;
         }
+
         private void Start()
         {
             ColorButtonsInit();
             AccessoriesButtonsInit();
-    
         }
+
         private void OnEnable()
         {
             UpdateButtons();
@@ -43,7 +47,10 @@ namespace UI
         {
             foreach (var accessoriesBuyButton in _accessoriesBuyButtons)
             {
-                accessoriesBuyButton.Button.onClick.AddListener(() => { TryBuyAccessory(accessoriesBuyButton.Type,accessoriesBuyButton.Price); });
+                accessoriesBuyButton.Button.onClick.AddListener(() =>
+                {
+                    TryBuyAccessory(accessoriesBuyButton.Type, accessoriesBuyButton.Price);
+                });
             }
         }
 
@@ -54,6 +61,10 @@ namespace UI
                 _progressService.PlayerData.CustomCarData.AvailableAccessories.Add(type);
                 BuyItem(price);
             }
+            else
+            {
+                _mediator.OpenNotEnoughMoneyPopup();
+            }
         }
 
 
@@ -61,15 +72,23 @@ namespace UI
         {
             foreach (var colorBuyButton in _colorBuyButtons)
             {
-                colorBuyButton.Button.onClick.AddListener(() => { TryBuyColor(colorBuyButton.Color,colorBuyButton.Price); });
+                colorBuyButton.Button.onClick.AddListener(() =>
+                {
+                    TryBuyColor(colorBuyButton.Color, colorBuyButton.Price);
+                });
             }
         }
+
         private void TryBuyColor(ColorType type, int price)
         {
             if (_progressService.PlayerData.MoneyData.CanBuy(price))
             {
                 _progressService.PlayerData.CustomCarData.AvailableColors.Add(type);
                 BuyItem(price);
+            }
+            else
+            {
+                _mediator.OpenNotEnoughMoneyPopup();
             }
         }
 

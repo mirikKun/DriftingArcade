@@ -10,7 +10,7 @@ public class UiTimer : MonoBehaviour
 
     public void UpdateTimer(float currentTime)
     {
-                TimeSpan timeSpanTime = TimeSpan.FromSeconds(currentTime);
-                  _timerText.text = timeSpanTime.ToString("m\\.ss\\.f");
+        TimeSpan timeSpanTime = TimeSpan.FromSeconds(currentTime);
+        _timerText.text = timeSpanTime.ToString("m\\.ss\\.f");
     }
 }

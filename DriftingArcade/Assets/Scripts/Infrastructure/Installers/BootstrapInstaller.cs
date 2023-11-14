@@ -12,9 +12,10 @@ using AndroidInput = DefaultNamespace.AndroidInput;
 
 namespace Infrastructure.Installers
 {
-    public class BootstrapInstaller : MonoInstaller,ICoroutineRunner
+    public class BootstrapInstaller : MonoInstaller, ICoroutineRunner
     {
         [SerializeField] private LoadingCurtain _loadingCurtain;
+
         public override void InstallBindings()
         {
             BindCoroutineRunner();
@@ -37,7 +38,8 @@ namespace Infrastructure.Installers
         {
             Container
                 .Bind<PhotonSceneLoader>()
-                .AsSingle();        }
+                .AsSingle();
+        }
 
 
         private void BindFactory()
@@ -99,12 +101,14 @@ namespace Infrastructure.Installers
                 .Bind<SceneLoader>()
                 .AsSingle();
         }
+
         private void BindPhotonDisconnector()
         {
             Container
                 .Bind<PhotonDisconnector>()
                 .AsSingle();
-        }        
+        }
+
         private void BindAdsService()
         {
             Container

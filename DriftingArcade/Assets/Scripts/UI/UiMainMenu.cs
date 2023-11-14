@@ -11,8 +11,10 @@ namespace UI
         [SerializeField] private Button _startSingleButton;
         [SerializeField] private Button _startOnlineButton;
         [SerializeField] private Button _openShopButton;
-    
+        [SerializeField] private Button _settingsShopButton;
+
         private RoomMediator _mediator;
+
         [Inject]
         private void Construct(RoomMediator mediator)
         {
@@ -25,7 +27,8 @@ namespace UI
             _startOnlineButton.onClick.AddListener(_mediator.ConnectToServer);
             _openRoomButton.onClick.AddListener(_mediator.OpenRoomPanel);
             _openShopButton.onClick.AddListener(_mediator.OpenShopPanel);
-        
+            _settingsShopButton.onClick.AddListener(_mediator.OpenSettingsPanel);
+
             _exitButton.onClick.AddListener(Exit);
         }
 

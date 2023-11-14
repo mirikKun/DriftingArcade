@@ -1,4 +1,3 @@
-using System;
 using Data;
 using Infrastructure.AssetManagement;
 using Infrastructure.Services.PersistentProgress;
@@ -11,31 +10,34 @@ namespace UI
 {
     public class CarCustomizationView : MonoBehaviour
     {
-
         [SerializeField] private ColorChooseButton[] _colorChooseButtons;
-        [SerializeField]private ColorType _currentColor ;
+        [SerializeField] private ColorType _currentColor;
         private ColorType _temporaryColor;
 
         [SerializeField] private Renderer[] _renderers;
 
         [SerializeField] private AccessoriesChooseButton[] _accessoriesChooseButtons;
-        [SerializeField]private AccessoriesType _currentAccessoriesType ;
+        [SerializeField] private AccessoriesType _currentAccessoriesType;
         private AccessoriesType _temporaryAccessoriesType;
 
         [SerializeField] private Transform _accessoriesHolder;
-    
+
         [SerializeField] private Button _doneButton;
         private IAssetProvider _assetProvider;
         private ISaveLoadService _saveLoadService;
         private IPersistentProgressService _progressService;
+        private RoomMediator _roomMediator;
 
         [Inject]
-        private void Construct(IAssetProvider assetProvider, ISaveLoadService saveLoadService,IPersistentProgressService progressService)
+        private void Construct(RoomMediator roomMediator,IAssetProvider assetProvider, ISaveLoadService saveLoadService,
+            IPersistentProgressService progressService)
         {
+            _roomMediator = roomMediator;
             _assetProvider = assetProvider;
             _saveLoadService = saveLoadService;
             _progressService = progressService;
         }
+
         private void Start()
         {
             ColorButtonsInit();
@@ -55,7 +57,6 @@ namespace UI
 
         public void Reset()
         {
- 
             CustomCarData currentCarData = _progressService.PlayerData.CustomCarData;
             ChangeColor(currentCarData.CarColor);
             ChangeAccessories(currentCarData.AccessoriesType);
@@ -77,19 +78,20 @@ namespace UI
 
         public void ChangeAccessories(AccessoriesType type)
         {
-            if (_temporaryAccessoriesType !=AccessoriesType.None )
+            if (_temporaryAccessoriesType != AccessoriesType.None)
             {
                 DeleteAllAccessories();
             }
+
             _temporaryAccessoriesType = type;
-        
-        
+
+
             CreateAccessory(type);
         }
 
         private void CreateAccessory(AccessoriesType type)
         {
-            if(type==AccessoriesType.None)
+            if (type == AccessoriesType.None)
                 return;
             GameObject newAccessories = _assetProvider.Instantiate(type.ToString());
             newAccessories.transform.SetParent(_accessoriesHolder);
@@ -117,7 +119,10 @@ namespace UI
         {
             foreach (var accessoriesChooseButton in _accessoriesChooseButtons)
             {
-                accessoriesChooseButton.Button.onClick.AddListener(() => { ChangeAccessories(accessoriesChooseButton.Type); });
+                accessoriesChooseButton.Button.onClick.AddListener(() =>
+                {
+                    ChangeAccessories(accessoriesChooseButton.Type);
+                });
             }
         }
 
@@ -125,18 +130,20 @@ namespace UI
         {
             _currentColor = _temporaryColor;
             _currentAccessoriesType = _temporaryAccessoriesType;
-        
+
             _progressService.PlayerData.CustomCarData.CarColor = _currentColor;
             _progressService.PlayerData.CustomCarData.AccessoriesType = _currentAccessoriesType;
-        
+
             _saveLoadService.SaveProgress();
+            _roomMediator.OpenChangesAreSavedPopup();
         }
 
         private void SetActiveAvailableAccessoryButtons()
         {
             foreach (var accessoriesChooseButton in _accessoriesChooseButtons)
             {
-                if (_progressService.PlayerData.CustomCarData.AvailableAccessories.Contains(accessoriesChooseButton.Type))
+                if (_progressService.PlayerData.CustomCarData.AvailableAccessories.Contains(
+                        accessoriesChooseButton.Type))
                 {
                     accessoriesChooseButton.gameObject.SetActive(true);
                 }

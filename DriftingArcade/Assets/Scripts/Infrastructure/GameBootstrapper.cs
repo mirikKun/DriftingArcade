@@ -3,15 +3,15 @@ using UnityEngine;
 
 namespace Infrastructure
 {
-  public class GameBootstrapper : MonoBehaviour
-  {
-   private GameStateMachine _stateMachine;
-   public void Setup(GameStateMachine stateMachine)
+    public class GameBootstrapper : MonoBehaviour
     {
-      _stateMachine = stateMachine;
-      _stateMachine.Enter<BootstrapState>();
-      DontDestroyOnLoad(this);
+        private GameStateMachine _stateMachine;
+
+        public void Setup(GameStateMachine stateMachine)
+        {
+            _stateMachine = stateMachine;
+            _stateMachine.Enter<BootstrapState>();
+            DontDestroyOnLoad(this);
+        }
     }
- 
-  }
 }

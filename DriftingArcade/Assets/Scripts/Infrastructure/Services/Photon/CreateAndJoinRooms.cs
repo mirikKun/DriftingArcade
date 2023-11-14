@@ -19,6 +19,7 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
     {
         _gameStateMachine = gameStateMachine;
     }
+
     private void Start()
     {
         _createButton.onClick.AddListener(CreateRoom);
@@ -29,6 +30,7 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.CreateRoom(_createInputField.text);
     }
+
     private void JoinRoom()
     {
         PhotonNetwork.JoinRoom(_joinInputField.text);

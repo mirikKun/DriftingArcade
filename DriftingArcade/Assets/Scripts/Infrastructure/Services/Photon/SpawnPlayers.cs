@@ -15,13 +15,11 @@ public class SpawnPlayers : MonoBehaviour
         _gameFactory = gameFactory;
         _game = game;
     }
+
     private void Start()
     {
-        GameObject car=_gameFactory.CreateOnlinePlayer(_spawnPoint);
+        GameObject car = _gameFactory.CreateOnlinePlayer(_spawnPoint);
         _game.SetPlayer(car.GetComponent<CarMover>());
         _cameraTargeter.SetupTarget(car.transform);
-        
-
     }
-
 }

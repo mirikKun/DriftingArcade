@@ -9,14 +9,12 @@ using Zenject;
 
 namespace UI
 {
-    public class GameEndReward:MonoBehaviour
+    public class GameEndReward : MonoBehaviour
     {
-
         [SerializeField] private TextMeshProUGUI _rewardText;
         [SerializeField] private Button _showRewardedAdButton;
 
-        [SerializeField]
-        private GameObject[] _adActiveObjects;
+        [SerializeField] private GameObject[] _adActiveObjects;
 
         private IAdsService _adsService;
         private IPersistentProgressService _progress;
@@ -25,14 +23,14 @@ namespace UI
         private ISaveLoadService _saveLoadService;
 
         [Inject]
-        private void Construct(IPersistentProgressService progress, IAdsService adsService,ISaveLoadService saveLoadService)
+        private void Construct(IPersistentProgressService progress, IAdsService adsService,
+            ISaveLoadService saveLoadService)
         {
             _adsService = adsService;
             _progress = progress;
-            
+
             _saveLoadService = saveLoadService;
             RefreshAvailableAd();
-
         }
 
         public void InitializeReward(int coins)
@@ -51,7 +49,7 @@ namespace UI
 
         private void UpdateRewardText(int coins)
         {
-             _rewardText.text = coins.ToString();
+            _rewardText.text = coins.ToString();
         }
 
         private void Start()
@@ -60,12 +58,14 @@ namespace UI
             _adsService.RewardedVideoReady += RefreshAvailableAd;
             _showRewardedAdButton.onClick.AddListener(OnShowAdClicked);
         }
-        private void OnDestroy() =>EventClear();
+
+        private void OnDestroy() => EventClear();
 
         private void EventClear() => _adsService.RewardedVideoReady -= RefreshAvailableAd;
+
         private void RefreshAvailableAd()
         {
-            bool videoReady  = _adsService.IsRewardedVideoReady;
+            bool videoReady = _adsService.IsRewardedVideoReady;
             Debug.Log(_adsService.IsRewardedVideoReady);
             foreach (GameObject activeObjects in _adActiveObjects)
             {

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using Photon.Pun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;

@@ -2,18 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PanelsSwitch 
+public class PanelsSwitch
 {
     private Stack<GameObject> _openedPanels;
     private GameObject _activePanel;
 
     public PanelsSwitch(GameObject startPanel)
     {
-        _openedPanels=new Stack<GameObject>();
+        _openedPanels = new Stack<GameObject>();
         _openedPanels.Push(startPanel);
 
         SetPanelActive(startPanel);
-
     }
 
     public void OpenPanel(GameObject panel)
@@ -27,7 +26,7 @@ public class PanelsSwitch
     public void Back()
     {
         _activePanel.SetActive(false);
-        GameObject previousPanel=_openedPanels.Pop();
+        GameObject previousPanel = _openedPanels.Pop();
         SetPanelActive(previousPanel);
     }
 
@@ -36,6 +35,4 @@ public class PanelsSwitch
         _activePanel = panel;
         _activePanel.SetActive(true);
     }
-
-    
 }

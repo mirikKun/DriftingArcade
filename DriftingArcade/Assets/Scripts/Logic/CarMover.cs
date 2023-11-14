@@ -8,15 +8,15 @@ public class CarMover : MonoBehaviour
 {
     [SerializeField] private DriftingEffect _driftingEffect;
     [SerializeField] private AnimationCurve _dragOverDirection;
-    [SerializeField] private float _moveSpeed =8;
+    [SerializeField] private float _moveSpeed = 8;
     [SerializeField] private float _maxSpeed = 16;
     [SerializeField] private float _drag = 0.98f;
     [SerializeField] private float _steerAngle = 50;
     [SerializeField] private float _traction = 0.01f;
     [SerializeField] private float _angleToMinDrag = 60;
 
-    [SerializeField] private float _angleToDriftProve=40f;
-    [SerializeField] private float _minSpeedToDrift=5;
+    [SerializeField] private float _angleToDriftProve = 40f;
+    [SerializeField] private float _minSpeedToDrift = 5;
     public event Action OnDrifting;
     private float _currentDrag;
 
@@ -26,7 +26,7 @@ public class CarMover : MonoBehaviour
     private Vector3 _startPosition;
     private float _forceAngle;
     private PhotonView _photonView;
-    
+
 
     [Inject]
     private void Construct(IInput input)
@@ -49,22 +49,23 @@ public class CarMover : MonoBehaviour
             CarMoving();
             SendMovingData();
         }
+
         OnDriftingInvoking(_forceAngle);
     }
 
     private void SendMovingData()
     {
-        if(_photonView)
+        if (_photonView)
             _photonView.RPC("SetForceAngleAndDirection", RpcTarget.Others, _forceAngle, _moveForce);
     }
 
     private bool IsByPlayer()
     {
-        return !_photonView||_photonView.IsMine;
+        return !_photonView || _photonView.IsMine;
     }
 
     [PunRPC]
-    private void SetForceAngleAndDirection(float angle,Vector3 moveForce)
+    private void SetForceAngleAndDirection(float angle, Vector3 moveForce)
     {
         _forceAngle = angle;
         _moveForce = moveForce;
@@ -90,8 +91,8 @@ public class CarMover : MonoBehaviour
 
     public void Reset()
     {
-        _moveForce=Vector3.zero;
-        _transform.rotation=Quaternion.identity;
+        _moveForce = Vector3.zero;
+        _transform.rotation = Quaternion.identity;
         _transform.position = _startPosition;
         _currentDrag = _drag;
     }
@@ -108,7 +109,7 @@ public class CarMover : MonoBehaviour
 
     private void OnDriftingInvoking(float forceAngle)
     {
-        if (forceAngle > _angleToDriftProve&&_moveForce.magnitude>_minSpeedToDrift)
+        if (forceAngle > _angleToDriftProve && _moveForce.magnitude > _minSpeedToDrift)
         {
             OnDrifting?.Invoke();
             _driftingEffect.EnableEffect();
@@ -124,5 +125,4 @@ public class CarMover : MonoBehaviour
     {
         return transform.forward * (_moveSpeed * _input.GasInput * Time.deltaTime);
     }
-    
 }

@@ -1,27 +1,27 @@
 ﻿namespace Infrastructure.States
 {
-  public class BootstrapState : IState
-  {
-    private const string Boot = "Boot";
-    private readonly GameStateMachine _stateMachine;
-    private readonly SceneLoader _sceneLoader;
-
-    public BootstrapState(GameStateMachine stateMachine, SceneLoader sceneLoader)
+    public class BootstrapState : IState
     {
-      _stateMachine = stateMachine;
-      _sceneLoader = sceneLoader;
-    }
+        private const string Boot = "Boot";
+        private readonly GameStateMachine _stateMachine;
+        private readonly SceneLoader _sceneLoader;
 
-    public void Enter()
-    {
-      _sceneLoader.Load(Boot, onLoaded: EnterLoadLevel);
-    }
+        public BootstrapState(GameStateMachine stateMachine, SceneLoader sceneLoader)
+        {
+            _stateMachine = stateMachine;
+            _sceneLoader = sceneLoader;
+        }
 
-    private void EnterLoadLevel() =>
-      _stateMachine.Enter<LoadProgressState>();
+        public void Enter()
+        {
+            _sceneLoader.Load(Boot, onLoaded: EnterLoadLevel);
+        }
 
-    public void Exit()
-    {
+        private void EnterLoadLevel() =>
+            _stateMachine.Enter<LoadProgressState>();
+
+        public void Exit()
+        {
+        }
     }
-  }
 }

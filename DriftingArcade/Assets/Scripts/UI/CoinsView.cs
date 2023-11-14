@@ -22,7 +22,7 @@ public class CoinsView : MonoBehaviour
 
     private void OnDestroy()
     {
-        if(_progressService.PlayerData!=null)
+        if (_progressService.PlayerData != null)
             _progressService.PlayerData.MoneyData.Changed -= UpdateText;
     }
 

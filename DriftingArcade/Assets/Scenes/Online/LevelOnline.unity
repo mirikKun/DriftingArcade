@@ -2439,7 +2439,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cbe938df26df494092963baca56068b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _totalSecondsTime: 120
+  _totalSecondsTime: 20
   _uiPoints: {fileID: 902737228}
   _uiTimer: {fileID: 690350993}
   _pointsPerSecond: 30

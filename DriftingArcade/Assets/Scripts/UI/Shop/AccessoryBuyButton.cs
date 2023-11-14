@@ -2,9 +2,10 @@ using Data;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+
 namespace UI
 {
-    public class AccessoryBuyButton:MonoBehaviour
+    public class AccessoryBuyButton : MonoBehaviour
     {
         public Button Button;
         public AccessoriesType Type;
