@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UI;
 using UnityEngine;
 using Zenject;
@@ -19,11 +16,13 @@ public class Game : MonoBehaviour
    
    private float _currentTime;
    private bool _timeEnded;
+   private GameEndReward _gameEndReward;
 
    [Inject]
-   private void Construct(IGameMediator mediator)
+   private void Construct(IGameMediator mediator,GameEndReward gameEndReward)
    {
       _mediator = mediator;
+      _gameEndReward = gameEndReward;
    }
 
    public void SetPlayer(CarMover carMover)
@@ -66,11 +65,16 @@ public class Game : MonoBehaviour
       _pointsCounter = new PointsCounter(_pointsPerSecond);
       if(_carMover)
          _carMover.Reset();
+      _uiTimer.UpdateTimer(_currentTime);
+      _uiPoints.UpdatePointsText(_pointsCounter.CurrentPoints);
+
+
    }
    private void EndGame()
    {
       _currentTime = _totalSecondsTime;
       _timeEnded = true;
       _mediator.OpenGameEndPanel();
+      _gameEndReward.InitializeReward((int)_pointsCounter.CurrentPoints);
    }
 }

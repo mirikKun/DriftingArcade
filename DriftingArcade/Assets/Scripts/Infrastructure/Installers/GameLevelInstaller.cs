@@ -9,6 +9,7 @@ namespace Infrastructure.Installers
     {
         [SerializeField] private Game _game;
         [SerializeField] private GameSingleLevelMediator _mediator;
+        [SerializeField] private GameEndReward _gameEndReward;
 
         [SerializeField] private Transform _spawnPoint;
         [SerializeField] private CameraTargeter _cameraTargeter;
@@ -21,11 +22,19 @@ namespace Infrastructure.Installers
         }
         public override void InstallBindings()
         {
+            BindGameEndRewarder();
             CarMover carMover = BindPlayer();
             BindGame(carMover);
             BindMediator();
         }
 
+        private void BindGameEndRewarder()
+        {
+            Container
+                .Bind<GameEndReward>()
+                .FromInstance(_gameEndReward)
+                .AsSingle();    
+        }
         private void BindGame(CarMover carMover)
         {
             Container

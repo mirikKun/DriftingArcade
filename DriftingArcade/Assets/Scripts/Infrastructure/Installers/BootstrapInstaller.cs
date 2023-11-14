@@ -2,6 +2,7 @@ using DefaultNamespace;
 using Infrastructure.AssetManagement;
 using Infrastructure.Fabric;
 using Infrastructure.Logic;
+using Infrastructure.Services.Monitization;
 using Infrastructure.Services.PersistentProgress;
 using Infrastructure.Services.SaveLoad;
 using Infrastructure.States;
@@ -28,8 +29,8 @@ namespace Infrastructure.Installers
             BindPhotonSceneLoader();
             BindFactory();
             BindStateMachine();
-            BindPhotonLoader();
-
+            BindPhotonDisconnector();
+            BindAdsService();
         }
 
         private void BindPhotonSceneLoader()
@@ -98,10 +99,17 @@ namespace Infrastructure.Installers
                 .Bind<SceneLoader>()
                 .AsSingle();
         }
-        private void BindPhotonLoader()
+        private void BindPhotonDisconnector()
         {
             Container
                 .Bind<PhotonDisconnector>()
+                .AsSingle();
+        }        
+        private void BindAdsService()
+        {
+            Container
+                .Bind<IAdsService>()
+                .To<AdsService>()
                 .AsSingle();
         }
 

@@ -28,7 +28,8 @@ public class CarView : MonoBehaviour
         CustomCarData currentCarData = _progressService.PlayerData.CustomCarData;
         ChangeColor(currentCarData.CarColor);
         CreateAccessory(currentCarData.AccessoriesType);
-        _photonView.RPC("SetSkinOnline", RpcTarget.Others,currentCarData.CarColor.ColorToVector3(), currentCarData.AccessoriesType.ToString());
+        if(_photonView)
+          _photonView.RPC("SetSkinOnline", RpcTarget.Others,currentCarData.CarColor.ColorToVector3(), currentCarData.AccessoriesType.ToString());
         
     }
 

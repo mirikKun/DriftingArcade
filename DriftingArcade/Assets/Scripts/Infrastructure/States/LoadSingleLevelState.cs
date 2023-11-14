@@ -2,14 +2,14 @@
 
 namespace Infrastructure.States
 {
-    public class LoadLevelState : IState
+    public class LoadSingleLevelState : IState
     {
-        private const string MainLevel = "MainSingle";
+        private const string MainLevel = "LevelSingle";
         private readonly GameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
         private readonly LoadingCurtain _curtain;
 
-        public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain)
+        public LoadSingleLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;

@@ -1,6 +1,5 @@
 ﻿using Infrastructure.States;
 using UnityEngine;
-using Zenject;
 
 namespace Infrastructure
 {

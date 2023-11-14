@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Infrastructure.Fabric;
 using Infrastructure.Logic;
 using Infrastructure.Services.PersistentProgress;
 using Infrastructure.Services.SaveLoad;
@@ -22,7 +21,7 @@ namespace Infrastructure.States
                 [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader),
                 [typeof(LoadProgressState)] = new LoadProgressState(this, progressService, saveLoadService),
                 [typeof(LoadRoomSceneState)] = new LoadRoomSceneState(this, sceneLoader, curtain),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, curtain),
+                [typeof(LoadSingleLevelState)] = new LoadSingleLevelState(this, sceneLoader, curtain),
                 [typeof(LoadOnlineLevelState)] = new LoadOnlineLevelState(this, photonSceneLoader),
                 [typeof(LoadServerLoadingSceneState)] = new LoadServerLoadingSceneState(this, sceneLoader),
                 [typeof(LoadLobbyScene)] = new LoadLobbyScene(this, sceneLoader, curtain),

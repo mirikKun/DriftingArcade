@@ -1,9 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Infrastructure.States;
 using Photon.Pun;
-using UnityEngine;
 using Zenject;
 
 public class ConnectToServer : MonoBehaviourPunCallbacks
@@ -12,7 +8,6 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
    [Inject]
    private void Construct(GameStateMachine stateMachine)
    {
-      Debug.Log(1111);
       _stateMachine = stateMachine;
    }
    private void Start()

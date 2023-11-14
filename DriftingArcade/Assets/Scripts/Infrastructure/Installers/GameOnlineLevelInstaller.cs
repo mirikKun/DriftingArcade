@@ -5,16 +5,24 @@ using Zenject;
 public class GameOnlineLevelInstaller : MonoInstaller
 {
     [SerializeField] private GameOnlineLevelMediator _mediator;
+    [SerializeField] private GameEndReward _gameEndReward;
 
     [SerializeField] private Game _game;
 
     public override void InstallBindings()
     {
+        BindGameEndRewarder();
         BindMediator();
-
-        BinGame();
+        BindGame();
     }
 
+    private void BindGameEndRewarder()
+    {
+        Container
+            .Bind<GameEndReward>()
+            .FromInstance(_gameEndReward)
+            .AsSingle();    
+    }
 
 
     private void BindMediator()
@@ -25,7 +33,7 @@ public class GameOnlineLevelInstaller : MonoInstaller
             .AsSingle();
         Container.Bind<IGameMediator>().FromInstance(_mediator);
     }
-    private void BinGame()
+    private void BindGame()
     {
         Container
             .Bind<Game>()

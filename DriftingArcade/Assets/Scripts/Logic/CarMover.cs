@@ -44,12 +44,23 @@ public class CarMover : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_photonView&&_photonView.IsMine)
+        if (IsByPlayer())
         {
             CarMoving();
-            _photonView.RPC("SetForceAngleAndDirection", RpcTarget.Others, _forceAngle,_moveForce);
+            SendMovingData();
         }
         OnDriftingInvoking(_forceAngle);
+    }
+
+    private void SendMovingData()
+    {
+        if(_photonView)
+            _photonView.RPC("SetForceAngleAndDirection", RpcTarget.Others, _forceAngle, _moveForce);
+    }
+
+    private bool IsByPlayer()
+    {
+        return !_photonView||_photonView.IsMine;
     }
 
     [PunRPC]

@@ -27,7 +27,7 @@ namespace UI
         }
 
         public void ResetCarCustomization() => _carCustomizationView.Reset();
-        public void OpenSingleLevel() => _gameStateMachine.Enter<LoadLevelState>();
+        public void OpenSingleLevel() => _gameStateMachine.Enter<LoadSingleLevelState>();
 
         public void OpenPreviousPanel() => _panelsSwitch.Back();
         public void OpenRoomPanel() => _panelsSwitch.OpenPanel(_roomPanel);
