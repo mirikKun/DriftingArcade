@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Data
@@ -6,7 +7,11 @@ namespace Data
     [Serializable]
     public class CustomCarData 
     {
-        public Color CarColor;
+        public ColorType CarColor;
         public AccessoriesType AccessoriesType;
+
+
+        public List<ColorType> AvailableColors;
+        public List<AccessoriesType> AvailableAccessories;
     }
 }

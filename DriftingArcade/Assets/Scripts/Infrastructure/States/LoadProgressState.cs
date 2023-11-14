@@ -1,7 +1,7 @@
-﻿using Data;
+﻿using System.Linq;
+using Data;
 using Infrastructure.Services.PersistentProgress;
 using Infrastructure.Services.SaveLoad;
-using UnityEngine;
 
 namespace Infrastructure.States
 {
@@ -10,7 +10,20 @@ namespace Infrastructure.States
     private readonly GameStateMachine _gameStateMachine;
     private readonly IPersistentProgressService _progressService;
     private readonly ISaveLoadService _saveLoadService;
-    private readonly Color _startCarColor = new Color(64/255f, 104/255f, 183/255f);
+    private static readonly ColorType _startCarColor = ColorType.Blue;
+
+    private readonly ColorType[] _startColors = new[]
+    {
+      ColorType.Blue,
+      ColorType.Green
+    };
+
+    private readonly AccessoriesType[] _startAccessoriesTypes = new[]
+    {
+      AccessoriesType.None,
+      AccessoriesType.PoliceSign,
+      AccessoriesType.TaxiSign
+    };
     public LoadProgressState(GameStateMachine gameStateMachine, IPersistentProgressService progressService,
       ISaveLoadService saveLoadService)
     {
@@ -39,6 +52,8 @@ namespace Infrastructure.States
       PlayerData newProgress = new PlayerData();
       newProgress.CustomCarData.CarColor = _startCarColor;
       newProgress.CustomCarData.AccessoriesType = AccessoriesType.None;
+      newProgress.CustomCarData.AvailableColors = _startColors.ToList();
+      newProgress.CustomCarData.AvailableAccessories = _startAccessoriesTypes.ToList();
       return newProgress;
     }
   }

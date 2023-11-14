@@ -1,3 +1,4 @@
+using System;
 using Data;
 using Infrastructure.AssetManagement;
 using Infrastructure.Services.PersistentProgress;
@@ -12,8 +13,8 @@ namespace UI
     {
 
         [SerializeField] private ColorChooseButton[] _colorChooseButtons;
-        [SerializeField]private Color _currentColor ;
-        private Color _temporaryColor;
+        [SerializeField]private ColorType _currentColor ;
+        private ColorType _temporaryColor;
 
         [SerializeField] private Renderer[] _renderers;
 
@@ -41,6 +42,15 @@ namespace UI
             AccessoriesButtonsInit();
             SaveButtonInit();
             Reset();
+            UpdateButtons();
+        }
+
+        public void UpdateButtons()
+        {
+            if (_progressService.PlayerData == null)
+                return;
+            SetActiveAvailableColorButtons();
+            SetActiveAvailableAccessoryButtons();
         }
 
         public void Reset()
@@ -56,12 +66,12 @@ namespace UI
             _doneButton.onClick.AddListener(SaveChanges);
         }
 
-        private void ChangeColor(Color color)
+        private void ChangeColor(ColorType color)
         {
             _temporaryColor = color;
             foreach (Renderer renderer in _renderers)
             {
-                renderer.material.SetColor("_Color", color);
+                renderer.material.SetColor("_Color", color.GetColor());
             }
         }
 
@@ -120,6 +130,36 @@ namespace UI
             _progressService.PlayerData.CustomCarData.AccessoriesType = _currentAccessoriesType;
         
             _saveLoadService.SaveProgress();
+        }
+
+        private void SetActiveAvailableAccessoryButtons()
+        {
+            foreach (var accessoriesChooseButton in _accessoriesChooseButtons)
+            {
+                if (_progressService.PlayerData.CustomCarData.AvailableAccessories.Contains(accessoriesChooseButton.Type))
+                {
+                    accessoriesChooseButton.gameObject.SetActive(true);
+                }
+                else
+                {
+                    accessoriesChooseButton.gameObject.SetActive(false);
+                }
+            }
+        }
+
+        private void SetActiveAvailableColorButtons()
+        {
+            foreach (var colorChooseButton in _colorChooseButtons)
+            {
+                if (_progressService.PlayerData.CustomCarData.AvailableColors.Contains(colorChooseButton.Color))
+                {
+                    colorChooseButton.gameObject.SetActive(true);
+                }
+                else
+                {
+                    colorChooseButton.gameObject.SetActive(false);
+                }
+            }
         }
     }
 }

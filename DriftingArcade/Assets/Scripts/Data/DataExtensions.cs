@@ -19,9 +19,7 @@ namespace Data
 
     public static T ToDeserialized<T>(this string json) =>
       JsonUtility.FromJson<T>(json);
-    public static T ToEnum<T>(this string value)
-    {
-      return (T) Enum.Parse(typeof(T), value, true);
-    }
+    public static T ToEnum<T>(this string value) => (T) Enum.Parse(typeof(T), value, true);
+
   }
 }

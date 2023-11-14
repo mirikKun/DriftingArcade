@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace Data
 {
@@ -11,6 +12,18 @@ namespace Data
         public void Collect(int newCoins)
         {
             _coins += newCoins;
+            Changed?.Invoke();
+        }
+
+        public bool CanBuy(int price)
+        {
+            return price < _coins;
+        }
+        public void Spend(int coins)
+        {
+            if(!CanBuy(coins))
+                return;
+            _coins -= coins;
             Changed?.Invoke();
         }
     }

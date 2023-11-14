@@ -16,10 +16,9 @@ namespace UI
         private CarCustomizationView _carCustomizationView;
 
         [Inject]
-        private void Construct(GameStateMachine gameStateMachine, CarCustomizationView carCustomizationView)
+        private void Construct(GameStateMachine gameStateMachine)
         {
             _gameStateMachine = gameStateMachine;
-            _carCustomizationView = carCustomizationView;
         }
         private void Start()
         {
@@ -32,7 +31,12 @@ namespace UI
         public void OpenPreviousPanel() => _panelsSwitch.Back();
         public void OpenRoomPanel() => _panelsSwitch.OpenPanel(_roomPanel);
         public void OpenShopPanel() => _panelsSwitch.OpenPanel(_shopPanel);
-        public void OpenCustomizationPanel() => _panelsSwitch.OpenPanel(_customizationPanel);
+        public void OpenCustomizationPanel()
+        {
+            _panelsSwitch.OpenPanel(_customizationPanel);
+            _carCustomizationView.UpdateButtons();
+        }
+
         public void ConnectToServer() => _gameStateMachine.Enter<LoadServerLoadingSceneState>();
     }
 }

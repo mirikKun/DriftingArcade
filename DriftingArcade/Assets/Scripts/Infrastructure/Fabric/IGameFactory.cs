@@ -1,9 +1,8 @@
-using Infrastructure.Services;
 using UnityEngine;
 
 namespace Infrastructure.Fabric
 {
-    public interface IGameFactory:IService
+    public interface IGameFactory
     {
         public GameObject CreatePlayer(Transform at);
 
